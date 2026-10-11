@@ -202,10 +202,11 @@ std::shared_ptr<spdlog::logger> CreateLogger(json11::Json& cfg)
         businFile->set_level(spdlog::level::info);
     }
     
-
+	auto consoleFile = std::make_shared<spdlog::sinks::stdout_color_sink_st>();
 
     sinks.push_back(debugFile);
     sinks.push_back(businFile);
+	sinks.push_back(consoleFile);
     //sinks.push_back(sysLog);
 
 	auto combined_logger = std::make_shared<spdlog::logger>("T",begin(sinks),end(sinks));

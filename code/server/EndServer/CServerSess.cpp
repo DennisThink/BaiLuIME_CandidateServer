@@ -33,6 +33,14 @@ void CServerSess::handle_message(const TransBaseMsg_t *hdr)
             }
         }
         break;
+        case MessageType::CandidateReq_Type:
+        {
+            CandidateGeneratorReqMsg rspMsg;
+            if (rspMsg.FromString(hdr->to_string()))
+            {
+
+            }
+        }break;
         default:
         {
         }
@@ -91,8 +99,7 @@ void CServerSess::handleKeepAliveReq(const KeepAliveReqMsg &reqMsg)
 {
     INFO(ms_loger, reqMsg.ToString());
     KeepAliveRspMsg msg("EndServer");
-    auto pMsg =
-        std::make_shared<TransBaseMsg_t>(msg.GetMsgType(), msg.ToString());
+    auto pMsg = std::make_shared<TransBaseMsg_t>(msg.GetMsgType(), msg.ToString());
     SendMsg(pMsg);
 }
 
@@ -104,5 +111,10 @@ void CServerSess::handleKeepAliveReq(const KeepAliveReqMsg &reqMsg)
 void CServerSess::handleKeepAliveRsp(const KeepAliveRspMsg &rspMsg)
 {
     INFO(ms_loger, "KeepAliveRsp:{}", rspMsg.ToString());
+}
+void CServerSess::handleCandidateReq(const CandidateGeneratorReqMsg& reqMsg)
+{
+	std::string strUserInput = reqMsg.GetUserInput();
+
 }
 } // namespace EndServer

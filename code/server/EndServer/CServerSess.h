@@ -60,6 +60,7 @@ public:
 protected:
     void handleKeepAliveReq(const KeepAliveReqMsg &reqMsg);
     void handleKeepAliveRsp(const KeepAliveRspMsg &rspMsg);
+	void handleCandidateReq(const CandidateGeneratorReqMsg& reqMsg);
 };
 } // namespace EndServer
 #endif

@@ -8,13 +8,17 @@
  *        如果您需要定义新的消息，可以直接在后面添加
  * 
  */
-enum class MessageType:uint32_t
+enum class MessageType :uint32_t
 {
 	Base_Type,
 	//心跳请求消息
 	KeepAliveReq_Type,
 	//心跳回复消息
 	KeepAliveRsp_Type,
+	//候选词请求消息
+	CandidateReq_Type,
+	//候选词回复消息
+	CandidateRsp_Type,
 };
 
 /**
@@ -332,12 +336,12 @@ private:
 public:
 	explicit CandidateGeneratorReqMsg()
 	{
-		m_type = MessageType::KeepAliveRsp_Type;
+		m_type = MessageType::CandidateReq_Type;
 		m_strClientId = "";
 	}
 	explicit CandidateGeneratorReqMsg(const std::string& clientId,const std::string userInput)
 	{
-		m_type = MessageType::KeepAliveRsp_Type;
+		m_type = MessageType::CandidateReq_Type;
 		m_strClientId = clientId;
 	}
 	virtual std::string ToString() const override
@@ -387,6 +391,16 @@ public:
 		}
 		return true;
 	}
+
+	std::string GetUserInput() const
+	{
+		return m_strUserInput;
+	}
+
+	std::string GetClientId() const
+	{
+		return m_strClientId;
+	}
 };
 
 class CandidateGeneratorRspMsg final :public BaseMsg
@@ -397,12 +411,12 @@ private:
 public:
 	explicit CandidateGeneratorRspMsg()
 	{
-		m_type = MessageType::KeepAliveRsp_Type;
+		m_type = MessageType::CandidateRsp_Type;
 		m_strClientId = "";
 	}
 	explicit CandidateGeneratorRspMsg(const std::string& clientId, const std::vector<std::string>& candidateList)
 	{
-		m_type = MessageType::KeepAliveRsp_Type;
+		m_type = MessageType::CandidateRsp_Type;
 		m_strClientId = clientId;
 		m_vecCandidate = candidateList;
 	}
@@ -465,6 +479,11 @@ public:
 			return false;
 		}
 		return true;
+	}
+
+	std::vector<std::string> GetCandidates() const
+	{
+		return m_vecCandidate;
 	}
 };
 /**

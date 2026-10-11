@@ -194,7 +194,7 @@ void CEndServer::Start(
 			WARN(ms_loger, "Listen To {}:{} Failed, Reason:{} {}", ms_config.ip,
 				 ms_config.port, ec.value(), ec.message());
 		}
-		setTimer(5);
+		setTimer(30);
 		doAccept();
 	}
 	else
