@@ -338,11 +338,13 @@ public:
 	{
 		m_type = MessageType::CandidateReq_Type;
 		m_strClientId = "";
+		m_strUserInput = "";
 	}
 	explicit CandidateGeneratorReqMsg(const std::string& clientId,const std::string userInput)
 	{
 		m_type = MessageType::CandidateReq_Type;
 		m_strClientId = clientId;
+		m_strUserInput = userInput;
 	}
 	virtual std::string ToString() const override
 	{
@@ -364,9 +366,9 @@ public:
 			return false;
 		}
 
-		if (json["ClientId"].is_string())
+		if (json["ClientID"].is_string())
 		{
-			m_strClientId = json["ClientId"].string_value();
+			m_strClientId = json["ClientID"].string_value();
 		}
 		else
 		{

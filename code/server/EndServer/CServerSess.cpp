@@ -1,4 +1,5 @@
 ﻿#include "CServerSess.h"
+#include "CandidateGeneratorManager.hpp"
 namespace EndServer
 {
 std::shared_ptr<spdlog::logger> CServerSess::ms_loger;
@@ -38,7 +39,7 @@ void CServerSess::handle_message(const TransBaseMsg_t *hdr)
             CandidateGeneratorReqMsg rspMsg;
             if (rspMsg.FromString(hdr->to_string()))
             {
-
+				handleCandidateReq(rspMsg);
             }
         }break;
         default:
@@ -115,6 +116,16 @@ void CServerSess::handleKeepAliveRsp(const KeepAliveRspMsg &rspMsg)
 void CServerSess::handleCandidateReq(const CandidateGeneratorReqMsg& reqMsg)
 {
 	std::string strUserInput = reqMsg.GetUserInput();
-
+	auto pInstance = CCandidateGeneratorManager::GetInstance();
+    if(pInstance != nullptr) {
+        auto candidates = pInstance->GenerateCandidates(strUserInput, 10);
+        for(auto & candidate : candidates) {
+            INFO(ms_loger, "Candidate:{}", candidate);
+		}
+        CandidateGeneratorRspMsg rspMsg(reqMsg.GetClientId(), candidates);
+		INFO(ms_loger, "CandidateGeneratorRspMsg:{}", rspMsg.ToString());
+        auto pMsg = std::make_shared<TransBaseMsg_t>(rspMsg.GetMsgType(), rspMsg.ToString());
+        SendMsg(pMsg);
+	}
 }
 } // namespace EndServer

@@ -39,9 +39,17 @@ set(SERVER_FILES
         ../include/DaemonApp/DaemonSvcApp.h 
         ../include/DaemonApp/DaemonSvcApp.cpp
 
-        ../include/thirdparty/json11/json11.cpp
+        ${THIRD_PARTY_FOLDER}/json11/json11.cpp
         #../include/thirdparty/fmt/src/format.cc
         #../include/thirdparty/fmt/src/posix.cc
         )
-add_executable(EndServer ${SERVER_FILES})
+SET(CANDIDATE_FOLDER_DIR ../../../external/BaiLuIME_CandidateGenerator/code/src/core/)
+SET(CANDIDATE_SERVER_FILE ${CANDIDATE_FOLDER_DIR}/RimeIceDictionary.cpp         
+${CANDIDATE_FOLDER_DIR}/SimpleQuanPinGenerator.cpp
+${CANDIDATE_FOLDER_DIR}/RimeCandidateGenerator.cpp  
+${CANDIDATE_FOLDER_DIR}/SimpleCandidateGenerator.cpp
+)
+
+
+add_executable(EndServer ${SERVER_FILES} ${CANDIDATE_SERVER_FILE} ../../src/core/CandidateGeneratorManager.cpp)
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/../bin)  

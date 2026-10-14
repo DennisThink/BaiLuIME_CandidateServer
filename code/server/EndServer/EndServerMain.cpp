@@ -27,6 +27,10 @@ void GenerateCfgFile(std::string fileName) {
 }
 #ifdef WIN32
 int main(int argc, char *argv[]) {
+#ifdef _WIN32
+    ::SetConsoleOutputCP(CP_UTF8);   // 输出用 UTF-8
+    ::SetConsoleCP(CP_UTF8);         // 输入用 UTF-8
+#endif
   if (argc < 2) {
     PrintParamOption();
     return 0;
