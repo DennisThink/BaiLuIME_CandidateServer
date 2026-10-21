@@ -118,7 +118,7 @@ void CServerSess::handleCandidateReq(const CandidateGeneratorReqMsg& reqMsg)
 	std::string strUserInput = reqMsg.GetUserInput();
 	auto pInstance = CCandidateGeneratorManager::GetInstance();
     if(pInstance != nullptr) {
-        auto candidates = pInstance->GenerateCandidates(strUserInput, 10);
+        auto candidates = pInstance->GenerateCandidates(strUserInput, 100);
         for(auto & candidate : candidates) {
             INFO(ms_loger, "Candidate:{}", candidate);
 		}

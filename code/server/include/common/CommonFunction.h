@@ -18,7 +18,7 @@
 
 #include "CommonConfig.h"
 #include "Log.h"
-#include "../thirdparty/json11/json11.hpp"
+#include "json11.hpp"
 
 #ifdef  WIN32
 #include <windows.h>
